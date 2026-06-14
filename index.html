@@ -124,48 +124,7 @@
       color: var(--parchment);
     }
 
-    .cta-row {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      flex-wrap: wrap;
-    }
 
-    .btn-primary {
-      display: inline-block;
-      padding: 0.75rem 1.8rem;
-      background: var(--rust);
-      color: var(--parchment);
-      font-family: 'Space Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .btn-primary:hover { background: #cc5a3a; transform: translateY(-1px); }
-
-    .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.4rem;
-      border: 1px solid rgba(201,184,154,0.3);
-      color: var(--sepia);
-      font-family: 'Space Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      text-decoration: none;
-      cursor: pointer;
-      transition: border-color 0.2s, color 0.2s;
-      background: transparent;
-    }
-    .btn-ghost:hover { border-color: var(--sepia); color: var(--parchment); }
-
-    .tiktok-icon { width: 14px; height: 14px; fill: currentColor; }
 
     /* release tag */
     .release-tag {
@@ -327,6 +286,100 @@
       .footer-inner { flex-direction: column; text-align: center; }
     }
 
+    /* ── AUDIO PLAYER ── */
+    .track {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .track-main {
+      display: grid;
+      grid-template-columns: 2.5rem 2rem 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+    }
+
+    .play-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,184,154,0.3);
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: border-color 0.2s, background 0.2s;
+      padding: 0;
+    }
+    .play-btn svg { width: 10px; height: 10px; fill: var(--sepia); transition: fill 0.2s; margin-left: 1px; }
+    .play-btn.playing { border-color: var(--rust); background: var(--rust); }
+    .play-btn.playing svg { fill: var(--parchment); margin-left: 0; }
+    .track:hover .play-btn { border-color: var(--sepia); }
+
+    .audio-bar {
+      display: none;
+      padding: 0 1.2rem 0.9rem;
+      gap: 0.7rem;
+      align-items: center;
+    }
+    .audio-bar.visible { display: flex; }
+
+    .progress-wrap {
+      flex: 1;
+      height: 3px;
+      background: rgba(201,184,154,0.15);
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--rust);
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.1s linear;
+      pointer-events: none;
+    }
+
+    .time-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--dim);
+      white-space: nowrap;
+      min-width: 3.2rem;
+      text-align: right;
+    }
+
+    .volume-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .volume-wrap svg { width: 12px; height: 12px; fill: var(--dim); flex-shrink: 0; }
+    .volume-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 60px;
+      height: 3px;
+      background: rgba(201,184,154,0.15);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--sepia);
+      cursor: pointer;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { transition: none !important; }
     }
@@ -357,17 +410,7 @@
         The session never ends.
       </p>
 
-      <div class="cta-row">
-        <a class="btn-primary" href="https://cdbaby.com" target="_blank" rel="noopener">
-          Buy from Artist
-        </a>
-        <a class="btn-ghost" href="https://tiktok.com/@neosessions" target="_blank" rel="noopener">
-          <svg class="tiktok-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.79 1.53V6.77a4.85 4.85 0 0 1-1.02-.08z"/>
-          </svg>
-          TikTok
-        </a>
-      </div>
+
 
       <p class="release-tag">Released <span>2026</span> · 9 Tracks · OPM Indietronica</p>
     </div>
@@ -378,88 +421,122 @@
   <!-- TRACKLIST -->
   <section class="tracklist-section">
     <p class="section-label">Album Tracks</p>
-    <ol class="tracklist" aria-label="Pahina tracklist">
+    <ol class="tracklist" aria-label="Pahina tracklist" id="tracklist"></ol>
 
-      <li class="track">
-        <span class="track-num">01</span>
-        <div class="track-info">
-          <div class="track-name">Ikaw Na Nga Kaya</div>
-          <div class="track-feat">Alternate Mix</div>
+  <script>
+    const BASE = 'https://pub-cc06aaf507f14f41896ef4b770ae5425.r2.dev/';
+    const tracks = [
+      { num:'01', name:'Ikaw Na Nga Kaya',     feat:'Remix',             dur:'5:26', file:'Ikaw%20Na%20Nga%20Kaya%20-%20Remix.mp3' },
+      { num:'02', name:'Mahal Pa Rin Kita',    feat:'',                  dur:'4:02', file:'Mahal%20Pa%20Rin%20Kita.mp3' },
+      { num:'03', name:'Ikaw Ang Adlaw Ko',    feat:'feat. Yuki Padilla',dur:'4:17', file:'Ikaw%20Ang%20Adlaw%20Ko.mp3' },
+      { num:'04', name:'Pahina',               feat:'Carrier Single',    dur:'4:45', file:'PAHINA.mp3' },
+      { num:'05', name:'Hanggang Ngayon',      feat:'Alternate Mix',     dur:'4:33', file:'Hanggang%20Ngayon%20.mp3' },
+      { num:'06', name:'Pinagtagpo',           feat:'feat. Yuki Padilla',dur:'3:58', file:'Pinagtagpo%20(alt%20Mix).mp3' },
+      { num:'07', name:'Paalam, Mahal',        feat:'',                  dur:'4:43', file:'Paalam%20Mahal.mp3' },
+      { num:'08', name:'Hanggang Sa Muli',     feat:'feat. Yuki Padilla',dur:'3:47', file:'Hanggang%20Sa%20Muli.mp3' },
+      { num:'09', name:'Pahina',               feat:'Acoustic Version',  dur:'5:04', file:'Pahina-%20Acoustic.mp3' },
+    ];
+
+    const list = document.getElementById('tracklist');
+    let currentAudio = null;
+    let currentBtn   = null;
+    let currentBar   = null;
+
+    function fmt(s) {
+      const m = Math.floor(s / 60);
+      const sec = Math.floor(s % 60).toString().padStart(2,'0');
+      return `${m}:${sec}`;
+    }
+
+    tracks.forEach((t, i) => {
+      const li = document.createElement('li');
+      li.className = 'track';
+
+      li.innerHTML = `
+        <div class="track-main">
+          <span class="track-num">${t.num}</span>
+          <button class="play-btn" aria-label="Play ${t.name}">
+            <svg viewBox="0 0 10 12" xmlns="http://www.w3.org/2000/svg"><polygon points="0,0 10,6 0,12"/></svg>
+          </button>
+          <div class="track-info">
+            <div class="track-name">${t.name}</div>
+            ${t.feat ? `<div class="track-feat">${t.feat}</div>` : ''}
+          </div>
+          <span class="track-duration">${t.dur}</span>
         </div>
-        <span class="track-duration">5:26</span>
-      </li>
-
-      <li class="track">
-        <span class="track-num">02</span>
-        <div class="track-info">
-          <div class="track-name">Mahal Pa Rin Kita</div>
+        <div class="audio-bar" id="bar-${i}">
+          <div class="progress-wrap" id="prog-${i}">
+            <div class="progress-fill" id="fill-${i}"></div>
+          </div>
+          <span class="time-label" id="time-${i}">0:00</span>
+          <div class="volume-wrap">
+            <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+            <input type="range" class="volume-slider" id="vol-${i}" min="0" max="1" step="0.05" value="1" />
+          </div>
         </div>
-        <span class="track-duration">4:02</span>
-      </li>
+      `;
 
-      <li class="track">
-        <span class="track-num">03</span>
-        <div class="track-info">
-          <div class="track-name">Ikaw Ang Adlaw Ko</div>
-          <div class="track-feat">feat. Yuki Padilla</div>
-        </div>
-        <span class="track-duration">4:17</span>
-      </li>
+      list.appendChild(li);
 
-      <li class="track">
-        <span class="track-num">04</span>
-        <div class="track-info">
-          <div class="track-name">Pahina</div>
-          <div class="track-feat">Carrier Single</div>
-        </div>
-        <span class="track-duration">4:45</span>
-      </li>
+      const btn   = li.querySelector('.play-btn');
+      const bar   = li.querySelector(`#bar-${i}`);
+      const prog  = li.querySelector(`#prog-${i}`);
+      const fill  = li.querySelector(`#fill-${i}`);
+      const time  = li.querySelector(`#time-${i}`);
+      const vol   = li.querySelector(`#vol-${i}`);
 
-      <li class="track">
-        <span class="track-num">05</span>
-        <div class="track-info">
-          <div class="track-name">Hanggang Ngayon</div>
-          <div class="track-feat">Alternate Mix</div>
-        </div>
-        <span class="track-duration">4:33</span>
-      </li>
+      const audio = new Audio();
+      audio.preload = 'none';
 
-      <li class="track">
-        <span class="track-num">06</span>
-        <div class="track-info">
-          <div class="track-name">Pinagtagpo</div>
-          <div class="track-feat">feat. Yuki Padilla</div>
-        </div>
-        <span class="track-duration">3:58</span>
-      </li>
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
 
-      <li class="track">
-        <span class="track-num">07</span>
-        <div class="track-info">
-          <div class="track-name">Paalam, Mahal</div>
-        </div>
-        <span class="track-duration">4:43</span>
-      </li>
+        // stop any other playing track
+        if (currentAudio && currentAudio !== audio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+          currentBtn.classList.remove('playing');
+          currentBar.classList.remove('visible');
+          document.querySelector(`#fill-${[...list.children].indexOf(currentBar.closest('li'))}`).style.width = '0%';
+        }
 
-      <li class="track">
-        <span class="track-num">08</span>
-        <div class="track-info">
-          <div class="track-name">Hanggang Sa Muli</div>
-          <div class="track-feat">feat. Yuki Padilla</div>
-        </div>
-        <span class="track-duration">3:47</span>
-      </li>
+        if (audio.paused) {
+          if (!audio.src) audio.src = BASE + t.file;
+          audio.play();
+          btn.classList.add('playing');
+          bar.classList.add('visible');
+          currentAudio = audio;
+          currentBtn   = btn;
+          currentBar   = bar;
+        } else {
+          audio.pause();
+          btn.classList.remove('playing');
+        }
+      });
 
-      <li class="track">
-        <span class="track-num">09</span>
-        <div class="track-info">
-          <div class="track-name">Pahina</div>
-          <div class="track-feat">Acoustic Version</div>
-        </div>
-        <span class="track-duration">5:04</span>
-      </li>
+      audio.addEventListener('timeupdate', () => {
+        if (!audio.duration) return;
+        const pct = (audio.currentTime / audio.duration) * 100;
+        fill.style.width = pct + '%';
+        time.textContent = fmt(audio.currentTime);
+      });
 
-    </ol>
+      audio.addEventListener('ended', () => {
+        btn.classList.remove('playing');
+        fill.style.width = '0%';
+        time.textContent = '0:00';
+      });
+
+      prog.addEventListener('click', (e) => {
+        if (!audio.duration) return;
+        const rect = prog.getBoundingClientRect();
+        const pct  = (e.clientX - rect.left) / rect.width;
+        audio.currentTime = pct * audio.duration;
+      });
+
+      vol.addEventListener('input', () => { audio.volume = vol.value; });
+    });
+  </script>
   </section>
 
   <!-- FOOTER -->
@@ -467,7 +544,6 @@
     <div class="footer-inner">
       <div class="footer-brand">NEOSESSIONS</div>
       <div class="footer-links">
-        <a href="https://tiktok.com/@neosessions" target="_blank" rel="noopener">TikTok</a>
         <a href="https://cdbaby.com" target="_blank" rel="noopener">CD Baby</a>
       </div>
       <p class="footer-copy">© 2026 NEOSESSIONS · Kevin Padilla</p>
