@@ -296,12 +296,15 @@
     }
 
     .track-main {
-      display: grid;
-      grid-template-columns: 2.5rem 2rem 1fr auto;
+      display: flex;
       align-items: center;
       gap: 1rem;
       padding: 1rem 1.2rem;
     }
+    .track-main .track-num { flex-shrink: 0; width: 2rem; text-align: right; }
+    .track-main .play-btn  { flex-shrink: 0; }
+    .track-main .track-info { flex: 1; min-width: 0; }
+    .track-main .track-duration { flex-shrink: 0; }
 
     .play-btn {
       width: 28px;
@@ -543,9 +546,7 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">NEOSESSIONS</div>
-      <div class="footer-links">
-        <a href="https://cdbaby.com" target="_blank" rel="noopener">CD Baby</a>
-      </div>
+
       <p class="footer-copy">© 2026 NEOSESSIONS · Kevin Padilla</p>
     </div>
   </footer>
