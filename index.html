@@ -342,7 +342,28 @@
       cursor: pointer;
     }
 
-    /* FOOTER */
+    /* AUDIO UNLOCK OVERLAY */
+    #audio-unlock {
+      display: none;
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      background: var(--rust);
+      color: var(--parchment);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      cursor: pointer;
+      border-radius: 2px;
+      white-space: nowrap;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    #audio-unlock.visible { display: block; }
     footer {
       position: relative;
       z-index: 1;
@@ -421,6 +442,8 @@
     <ol id="tracklist"></ol>
   </section>
 
+  <button id="audio-unlock">Tap to Enable Audio</button>
+
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">NEOSESSIONS</div>
@@ -429,18 +452,32 @@
   </footer>
 
   <script>
-    // Unlock audio context on first touch (required for Android Chrome)
+    // Detect mobile and show unlock button (Firefox Android requires direct gesture)
     var audioUnlocked = false;
+    var unlockBtn = document.getElementById('audio-unlock');
+
+    if (/Mobi|Android/i.test(navigator.userAgent)) {
+      unlockBtn.classList.add('visible');
+    }
+
     function unlockAudio() {
       if (audioUnlocked) return;
       var silence = new Audio();
       silence.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
       silence.play().then(function() {
         audioUnlocked = true;
-      }).catch(function(){});
+        unlockBtn.classList.remove('visible');
+      }).catch(function() {
+        audioUnlocked = true;
+        unlockBtn.classList.remove('visible');
+      });
     }
-    document.addEventListener('touchstart', unlockAudio, { once: true });
-    document.addEventListener('click', unlockAudio, { once: true });
+
+    unlockBtn.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      unlockAudio();
+    });
+    unlockBtn.addEventListener('click', unlockAudio);
 
     const BASE = 'https://pub-cc06aaf507f14f41896ef4b770ae5425.r2.dev/';
     const tracks = [
