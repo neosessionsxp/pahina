@@ -384,6 +384,8 @@
       .album-title { font-size: clamp(3rem, 12vw, 4.5rem); }
       .tracklist-section { padding: 3rem 1.2rem 4rem; }
       .footer-inner { flex-direction: column; text-align: center; }
+      .play-btn { width: 36px; height: 36px; min-width: 36px; }
+      .track-main { padding: 1rem 1rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -422,7 +424,7 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">NEOSESSIONS</div>
-      <p class="footer-copy">© 2026 NEOSESSIONS · KRP</p>
+      <p class="footer-copy">© 2026 NEOSESSIONS · Kevin Padilla</p>
     </div>
   </footer>
 
@@ -533,9 +535,7 @@
       const audio = new Audio();
       audio.preload = 'none';
 
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-
+      function togglePlay() {
         if (currentAudio && currentAudio !== audio) {
           currentAudio.pause();
           currentAudio.currentTime = 0;
@@ -545,9 +545,18 @@
 
         if (audio.paused) {
           if (!audio.src) audio.src = BASE + t.file;
-          audio.play();
-          btn.classList.add('playing');
-          bar.classList.add('visible');
+          var playPromise = audio.play();
+          if (playPromise !== undefined) {
+            playPromise.then(function() {
+              btn.classList.add('playing');
+              bar.classList.add('visible');
+            }).catch(function(err) {
+              console.warn('Playback failed:', err);
+            });
+          } else {
+            btn.classList.add('playing');
+            bar.classList.add('visible');
+          }
           currentAudio = audio;
           currentBtn = btn;
           currentBar = bar;
@@ -555,6 +564,16 @@
           audio.pause();
           btn.classList.remove('playing');
         }
+      }
+
+      btn.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        togglePlay();
+      });
+
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        togglePlay();
       });
 
       audio.addEventListener('timeupdate', function() {
