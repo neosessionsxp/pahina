@@ -429,6 +429,19 @@
   </footer>
 
   <script>
+    // Unlock audio context on first touch (required for Android Chrome)
+    var audioUnlocked = false;
+    function unlockAudio() {
+      if (audioUnlocked) return;
+      var silence = new Audio();
+      silence.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+      silence.play().then(function() {
+        audioUnlocked = true;
+      }).catch(function(){});
+    }
+    document.addEventListener('touchstart', unlockAudio, { once: true });
+    document.addEventListener('click', unlockAudio, { once: true });
+
     const BASE = 'https://pub-cc06aaf507f14f41896ef4b770ae5425.r2.dev/';
     const tracks = [
       { num:'01', name:'Ikaw Na Nga Kaya',  feat:'Remix',              dur:'5:26', file:'Ikaw%20Na%20Nga%20Kaya%20-%20Remix.mp3' },
@@ -534,6 +547,7 @@
 
       const audio = new Audio();
       audio.preload = 'none';
+      audio.src = BASE + t.file;
 
       function togglePlay() {
         if (currentAudio && currentAudio !== audio) {
@@ -544,7 +558,6 @@
         }
 
         if (audio.paused) {
-          if (!audio.src) audio.src = BASE + t.file;
           var playPromise = audio.play();
           if (playPromise !== undefined) {
             playPromise.then(function() {
