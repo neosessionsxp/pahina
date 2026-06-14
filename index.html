@@ -586,11 +586,25 @@
       audio.preload = 'none';
       audio.src = BASE + t.file;
 
+      function setPlaying(b, playing) {
+        if (playing) {
+          b.classList.add('playing');
+          b.style.background = '#b84b2f';
+          b.style.borderColor = '#b84b2f';
+          b.querySelector('svg').style.fill = '#f2ead8';
+        } else {
+          b.classList.remove('playing');
+          b.style.background = '';
+          b.style.borderColor = '';
+          b.querySelector('svg').style.fill = '';
+        }
+      }
+
       function togglePlay() {
         if (currentAudio && currentAudio !== audio) {
           currentAudio.pause();
           currentAudio.currentTime = 0;
-          currentBtn.classList.remove('playing');
+          setPlaying(currentBtn, false);
           currentBar.classList.remove('visible');
         }
 
@@ -598,13 +612,13 @@
           var playPromise = audio.play();
           if (playPromise !== undefined) {
             playPromise.then(function() {
-              btn.classList.add('playing');
+              setPlaying(btn, true);
               bar.classList.add('visible');
             }).catch(function(err) {
               console.warn('Playback failed:', err);
             });
           } else {
-            btn.classList.add('playing');
+            setPlaying(btn, true);
             bar.classList.add('visible');
           }
           currentAudio = audio;
@@ -612,7 +626,7 @@
           currentBar = bar;
         } else {
           audio.pause();
-          btn.classList.remove('playing');
+          setPlaying(btn, false);
         }
       }
 
@@ -633,7 +647,7 @@
       });
 
       audio.addEventListener('ended', function() {
-        btn.classList.remove('playing');
+        setPlaying(btn, false);
         fill.style.width = '0%';
         timeLabel.textContent = '0:00';
       });
