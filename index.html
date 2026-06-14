@@ -167,28 +167,42 @@
     .tracklist { list-style: none; }
 
     .track {
-      display: grid;
-      grid-template-columns: 2.5rem 1fr auto;
-      align-items: center;
-      gap: 1rem;
-      padding: 1rem 1.2rem;
+      display: flex;
+      flex-direction: column;
       border-radius: 2px;
       background: var(--track-bg);
       margin-bottom: 2px;
-      cursor: default;
+      cursor: pointer;
       transition: background 0.18s;
       position: relative;
+      overflow: hidden;
     }
     .track:hover { background: var(--track-hover); }
+
+    .track::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--rust);
+      transform: scaleY(0);
+      transition: transform 0.18s;
+      border-radius: 1px;
+    }
+    .track:hover::before { transform: scaleY(1); }
 
     .track-num {
       font-family: 'Space Mono', monospace;
       font-size: 0.65rem;
       color: var(--dim);
       text-align: right;
+      flex-shrink: 0;
+      width: 2rem;
     }
 
-    .track-info { min-width: 0; }
+    .track-info { flex: 1; min-width: 0; }
 
     .track-name {
       font-family: 'DM Sans', sans-serif;
@@ -210,22 +224,8 @@
       font-family: 'Space Mono', monospace;
       font-size: 0.65rem;
       color: var(--dim);
+      flex-shrink: 0;
     }
-
-    /* gold bar on active/hover */
-    .track::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%) scaleY(0);
-      width: 2px;
-      height: 60%;
-      background: var(--rust);
-      transition: transform 0.18s;
-      border-radius: 1px;
-    }
-    .track:hover::before { transform: translateY(-50%) scaleY(1); }
 
     /* ── FOOTER ── */
     footer {
@@ -287,14 +287,6 @@
     }
 
     /* ── AUDIO PLAYER ── */
-    .track {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0;
-      padding: 0;
-      cursor: pointer;
-    }
-
     .track-main {
       display: flex;
       align-items: center;
