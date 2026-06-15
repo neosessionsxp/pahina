@@ -381,6 +381,8 @@
       audio.controls = true;
       audio.preload = 'none';
       audio.src = BASE + t.file;
+      audio.setAttribute('controlslist', 'nodownload');
+      audio.setAttribute('oncontextmenu', 'return false');
       playerWrap.appendChild(audio);
 
       // Toggle player open/close on header tap
